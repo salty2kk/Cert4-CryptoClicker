@@ -13,7 +13,7 @@ public class ClickUpgrade : MonoBehaviour
         if(GameManager.cryptoCoins >= cost)
         {
             GameManager.cryptoCoins -= cost;
-            MainClick.cpc += 1;
+            MainClick.coinsPerClick += 1;
             cost += 10;
             costText.text = "Click Upgrade - " + cost + " coins";
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MainClick : MonoBehaviour
 {
-    public static int cpc = 1;
+    public static int coinsPerClick = 1;
 
     public void MainButtonClick()
     {

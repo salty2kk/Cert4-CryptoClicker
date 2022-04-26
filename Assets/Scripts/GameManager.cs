@@ -6,10 +6,19 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public Text coinsText;
-    public static int cryptoCoins;
+    public Text coinsText2;
+
+    public static float cryptoCoins;
 
     void Update()
     {
-        coinsText.text = cryptoCoins + " Coin/s";
+        coinsText.text = cryptoCoins.ToString("0");
+        coinsText2.text = "Coins: " + cryptoCoins.ToString("0");
+
+        if(AutoCoinUpgrades.hasAComputer == true)
+        {
+            cryptoCoins += AutoCoinUpgrades.coinsPerSecond * Time.deltaTime /5;
+        }
     }
+
 }
