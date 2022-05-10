@@ -6,16 +6,18 @@ using UnityEngine.UI;
 public class ClickUpgrade : MonoBehaviour
 {
     public Text costText;
-    int cost = 20;
+    public Text multiplierLevel;
+    public int multiplierCost = 20;
 
     public void Purchased()
     {
-        if(GameManager.cryptoCoins >= cost)
+        if(GameManager.cryptoCoins >= multiplierCost)
         {
-            GameManager.cryptoCoins -= cost;
+            GameManager.cryptoCoins -= multiplierCost;
             MainClick.coinsPerClick += 1;
-            cost += 10;
-            costText.text = "Click Upgrade - " + cost + " coins";
+            multiplierCost *= 2;
+            costText.text = "Click Upgrade - " + multiplierCost + " coins";
+            multiplierLevel.text = MainClick.coinsPerClick + "X";
         }
         else
         {

@@ -8,7 +8,7 @@ public class MainClick : MonoBehaviour
 
     public void MainButtonClick()
     {
-        GameManager.cryptoCoins++;
+        GameManager.cryptoCoins += coinsPerClick;
         Debug.Log(GameManager.cryptoCoins);
     }
 }
