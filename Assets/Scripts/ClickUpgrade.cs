@@ -16,7 +16,7 @@ public class ClickUpgrade : MonoBehaviour
             GameManager.cryptoCoins -= multiplierCost;
             MainClick.coinsPerClick += 1;
             multiplierCost *= 2;
-            costText.text = "Click Upgrade - " + multiplierCost + " coins";
+            costText.text = "Cost = $" + multiplierCost;
             multiplierLevel.text = MainClick.coinsPerClick + "X";
         }
         else
