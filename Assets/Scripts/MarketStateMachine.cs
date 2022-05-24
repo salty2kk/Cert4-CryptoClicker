@@ -5,34 +5,46 @@ using UnityEngine.UI;
 
 public class MarketStateMachine : MonoBehaviour
 {
+    // our market runs as a set of enums, the enums use the ping pong function
+    // to effect a float that is our "share price". We use this script to also
+    // convert our crypo coins in to cash...
+    #region Variables
     public enum MarketState
     {
         UpAndDown,
         UpAndDownQuickly
     }
 
+    [Header("Market State Selector")]
     public MarketState currentState;
-    public GameManager gameManager;
 
+    [Header("Text Components")]
     public Text currentPriceText;
+
+    public InputField inputField;
+    private int userInput;
+
+    [Header("Share Prices")]
     public float startingSharePrice = 0.1f;
     public float currentSharePrice;
 
-    // Start is called before the first frame update
+    #endregion
     void Start()
     {
         currentSharePrice = startingSharePrice;
         NextState();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        currentPriceText.text = "Current Price: " + currentSharePrice.ToString("0.00");
+        // updates the current price text component
+        currentPriceText.text = currentSharePrice.ToString("0.00");
     }
 
     private void NextState()
     {
+        // this switch statement is used to switch between each state and
+        // run the coroutines
         switch (currentState)
         {
             case MarketState.UpAndDown:
@@ -47,38 +59,60 @@ public class MarketStateMachine : MonoBehaviour
     #region Market Coroutines
     private IEnumerator UpAndDown()
     {
-        Debug.Log("Increasing: Enter");
+        Debug.Log("Normal: Enter");
 
         while (currentState == MarketState.UpAndDown)
         {
-            currentSharePrice = Mathf.PingPong(Time.time / 10, 1.6f);                   // This function goes back and forth over Time between 0 and 1.6
-                                                                                        // Time is divided by 10 so the number changes at one tenth it's normal speed
+            // this function goes back and forth over time between 0 and 1.6
+            // time is divided by 10 so the number changes at one tenth it's normal speed
+            currentSharePrice = Mathf.PingPong(Time.time / 10, 1.6f);
+
+            if (currentSharePrice >= 1.2f)
+            {
+                currentState = MarketState.UpAndDownQuickly;
+            }
+
             yield return null;
         }
-
-        Debug.Log("Increasing: Exit");
+        Debug.Log("Normal: Exit");
         NextState();
     }
 
     private IEnumerator UpAndDownQuickly()
     {
-        Debug.Log("Decreasing: Enter");
+        Debug.Log("Quickly: Enter");
 
         while (currentState == MarketState.UpAndDownQuickly)
         {
+            // time is divided by 5 so the number changes at two tenths it's normal speed
             currentSharePrice = Mathf.PingPong(Time.time / 5, 1.6f);
+
+            if(currentSharePrice <= 1.21f)
+            {
+                currentState = MarketState.UpAndDown;
+            }
 
             yield return null;
         }
-
-        Debug.Log("Decreasing: Exit");
+        Debug.Log("Quickly: Exit");
         NextState();
     }
-    public void SuddenIncrease()
-    {
-
-        currentSharePrice += 0.5f;
-        Debug.Log("Random Event");
-    }
+    
     #endregion
+
+    public void PurchaseCash()
+    {
+        // this converts whatever the user inputs into an int that can be used
+        userInput = int.Parse(inputField.text);
+        Debug.Log(userInput);
+
+        // if we have as many coins as we say we do
+        if(GameManager.cryptoCoins >= userInput)
+        {
+            // subtract the amount of coins you'd like to sell
+            // and make our total cash increase the input x the share price
+            GameManager.cryptoCoins -= userInput;
+            GameManager.totalCash += userInput * currentSharePrice;
+        }
+    }
 }

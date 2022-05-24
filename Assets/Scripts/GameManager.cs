@@ -5,25 +5,28 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    #region Variables
+    [Header("Text Components")]
     public Text mainCoinText;
     public Text secondaryCoinText;
+    public Text mainCashText;
 
     public static float cryptoCoins;
     public static float totalCash;
 
+    #endregion
 
-    private void Start()
-    {
-
-    }
     void Update()
     {
+        // updating text components
         mainCoinText.text = cryptoCoins.ToString("0");
         secondaryCoinText.text = "Coins: " + cryptoCoins.ToString("0");
+        mainCashText.text = "Cash: " + totalCash.ToString("0");
 
         if(AutoCoinUpgrades.hasAComputer == true)
         {
-            cryptoCoins += AutoCoinUpgrades.coinsPerSecond * Time.deltaTime /5;
+            // produce one crypto coin every 5 seconds for each computer
+            cryptoCoins += AutoCoinUpgrades.totalComputers * Time.deltaTime /5;
         }
    
     }
