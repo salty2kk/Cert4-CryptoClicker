@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public Text secondaryCoinText;
     public Text mainCashText;
 
+    // these floats are static so they can be
+    // accessed and affected by other scripts
     public static float cryptoCoins;
     public static float totalCash;
 

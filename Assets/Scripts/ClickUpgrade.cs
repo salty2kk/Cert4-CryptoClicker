@@ -9,7 +9,7 @@ public class ClickUpgrade : MonoBehaviour
     public Text costText;
     public Text multiplierLevel;
     [Header("Text Components")]
-    public int multiplierCost = 20;
+    public int multiplierCost = 15;
 
     public void Purchased()
     {

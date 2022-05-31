@@ -21,6 +21,7 @@ public class MarketStateMachine : MonoBehaviour
     [Header("Text Components")]
     public Text currentPriceText;
 
+    [Header("Input Field for Selling Cash")]
     public InputField inputField;
     private int userInput;
 
@@ -50,9 +51,6 @@ public class MarketStateMachine : MonoBehaviour
             case MarketState.UpAndDown:
                 StartCoroutine(UpAndDown());
                 break;
-            case MarketState.UpAndDownQuickly:
-                StartCoroutine(UpAndDownQuickly());
-                break;
         }
     }
 
@@ -67,17 +65,13 @@ public class MarketStateMachine : MonoBehaviour
             // time is divided by 10 so the number changes at one tenth it's normal speed
             currentSharePrice = Mathf.PingPong(Time.time / 10, 1.6f);
 
-            if (currentSharePrice >= 1.2f)
-            {
-                currentState = MarketState.UpAndDownQuickly;
-            }
 
             yield return null;
         }
         Debug.Log("Normal: Exit");
         NextState();
     }
-
+    /*
     private IEnumerator UpAndDownQuickly()
     {
         Debug.Log("Quickly: Enter");
@@ -97,7 +91,7 @@ public class MarketStateMachine : MonoBehaviour
         Debug.Log("Quickly: Exit");
         NextState();
     }
-    
+    */
     #endregion
 
     public void PurchaseCash()

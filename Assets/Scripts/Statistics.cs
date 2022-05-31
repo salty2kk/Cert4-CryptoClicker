@@ -6,12 +6,18 @@ using UnityEngine.UI;
 public class Statistics : MonoBehaviour
 {
     #region Variables
-    public Text mainInfoText;
+    [Header("Text Components")]
+    public Text totalComputerText;
+    public Text perSecondText;
     public Text perMinuteText;
+    public Text perHourText;
+    public Text perDayText;
 
-    private int perMinuteInt;
-    private int perSecondInt;
     private int totalComputers;
+    private int perSecondInt;
+    private int perMinuteInt;
+    private int perHourInt;
+    private int perDayInt;
 
     #endregion
     void Update()
@@ -19,9 +25,14 @@ public class Statistics : MonoBehaviour
         totalComputers = AutoCoinUpgrades.totalComputers;
         perSecondInt = AutoCoinUpgrades.totalComputers / 5;
         perMinuteInt = perSecondInt * 60;
+        perHourInt = perMinuteInt * 60;
+        perDayInt = perHourInt * 24;
 
-        mainInfoText.text = "You currently own " + totalComputers + " total computers, producing coins at " + perSecondInt + " per second.";
-        perMinuteText.text = perMinuteInt.ToString("0") + " : Per Minute";
+
+        totalComputerText.text =  totalComputers.ToString("0");
+        perSecondText.text = perSecondInt.ToString("0");
+        perMinuteText.text = perMinuteInt.ToString("0");
+        perHourText.text = perHourInt.ToString("0");
+        perDayText.text = perDayInt.ToString("0");
     }
-
 }
